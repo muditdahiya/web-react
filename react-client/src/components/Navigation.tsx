@@ -4,9 +4,11 @@ const Navigation = () => {
   return (
     <div className="Navigation">
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a className="navbar-brand" href="#">
+        <span className="navbar-brand">
           <img src="logo512.png" alt="logo" height={"60px"} />
-        </a>
+        </span>
+
+        {/* button for responsive design */}
         <button
           className="navbar-toggler"
           type="button"

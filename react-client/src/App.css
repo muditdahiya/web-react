@@ -2,7 +2,6 @@
   text-align: center;
 }
 
-.Navigation a {
-  text-decoration: none;
-  color: white;
+.Navigation {
+  margin-bottom: 20px;
 }
