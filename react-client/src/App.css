@@ -1,3 +1,8 @@
 .App {
   text-align: center;
 }
+
+.Navigation a {
+  text-decoration: none;
+  color: white;
+}
