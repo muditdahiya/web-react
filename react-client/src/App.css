@@ -5,3 +5,31 @@
 .Navigation {
   margin-bottom: 20px;
 }
+.login-container{
+  width:400px;
+  height:300px;
+  align-content: center;
+  justify-content: center;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+  border: 1px solid ;
+  border-radius: 10px;
+  padding: 50px;
+  margin-top: 80px;
+}
+input{
+width:90%;
+padding: 4px;
+display: flex;
+align-items: center;
+justify-content: space-evenly;
+margin: 5px;
+}
+button{
+width:50%;
+background-color: rgb(82, 156, 230);
+padding: 4px;
+font-weight: bold;
+}
