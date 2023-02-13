@@ -1,7 +1,6 @@
 import axios from "axios";
 import Post from "../components/Post";
 import { useEffect, useState } from "react";
-// import { uuid } from "uuidv4";
 import { v4 as uuidv4 } from "uuid";
 
 const Home = () => {
