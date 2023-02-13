@@ -1,3 +1,5 @@
+import ReactQuill from "react-quill";
+
 const MyPosts = () => {
   return (
     <div className="MyPosts">

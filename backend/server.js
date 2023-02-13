@@ -36,19 +36,29 @@ app.get("/api/posts", (req, res) => {
 });
 
 // create post
+app.post("/api/create-post", (req, res) => {});
+
+// get single post
+app.get("/api/post/:id", (req, res) => {});
 
 // update post
+app.put("/api/post/:id", (req, res) => {});
 
 // delete post
+app.post("/api/post/:id", (req, res) => {});
 
 // users
 // create user
+app.post("/api/create-user", (req, res) => {});
 
 // get user
+app.get("/api/user/:id", (req, res) => {});
 
 // update user
+app.put("/api/user/:id", (req, res) => {});
 
 // delete user
+app.post("/api/user/:id", (req, res) => {});
 
 // ========================================================= END OF ROUTES =========================================================
 
