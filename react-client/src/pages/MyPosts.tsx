@@ -1,4 +1,4 @@
-import ReactQuill from "react-quill";
+import DOMPurify from "dompurify";
 
 const MyPosts = () => {
   return (
