@@ -7,6 +7,7 @@ import MyPosts from "./pages/MyPosts";
 import Favourites from "./pages/Favourites";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
+import AddPosts from "./pages/AddPosts";
 
 function App() {
   return (
@@ -18,7 +19,8 @@ function App() {
         <Route path="/favourites" element={<Favourites />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<About />} />
-        <Route path='/Login' element={<Login />} />
+        <Route path="/Login" element={<Login />} />
+        <Route path="addposts" element={<AddPosts />} />
       </Routes>
     </div>
   );

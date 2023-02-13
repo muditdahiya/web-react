@@ -39,13 +39,18 @@ app.get("/api/posts", (req, res) => {
 app.post("/api/create-post", (req, res) => {});
 
 // get single post
-app.get("/api/post/:id", (req, res) => {});
+app.get("/api/posts/post/:id", (req, res) => {
+  Post.findOne({_id: req.params.id}, (err, post) =>{
+    if (err) res.status(404).send("Sorry, cant find that");
+    res.json(post);
+  })
+});
 
 // update post
-app.put("/api/post/:id", (req, res) => {});
+app.put("/api/update-post/:id", (req, res) => {});
 
 // delete post
-app.post("/api/post/:id", (req, res) => {});
+app.post("/api/delete-post/:id", (req, res) => {});
 
 // users
 // create user
@@ -55,10 +60,10 @@ app.post("/api/create-user", (req, res) => {});
 app.get("/api/user/:id", (req, res) => {});
 
 // update user
-app.put("/api/user/:id", (req, res) => {});
+app.put("/api/update-user/:id", (req, res) => {});
 
 // delete user
-app.post("/api/user/:id", (req, res) => {});
+app.post("/api/delete-user/:id", (req, res) => {});
 
 // ========================================================= END OF ROUTES =========================================================
 
