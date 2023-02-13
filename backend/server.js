@@ -25,12 +25,31 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // ========================================================= END OF MIDDLEWARE =========================================================
 
 // ========================================================= START OF ROUTES =========================================================
+
+// posts
+// get all posts
 app.get("/api/posts", (req, res) => {
   Post.find((err, posts) => {
     if (err) res.send(err);
     res.json(posts);
   });
 });
+
+// create post
+
+// update post
+
+// delete post
+
+// users
+// create user
+
+// get user
+
+// update user
+
+// delete user
+
 // ========================================================= END OF ROUTES =========================================================
 
 if (connectDB()) {
