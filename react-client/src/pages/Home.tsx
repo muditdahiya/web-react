@@ -18,6 +18,9 @@ const Home = () => {
     }
 
     getPosts();
+    console.log("====================================");
+    console.log("rendered");
+    console.log("====================================");
   }, []);
 
   return (
