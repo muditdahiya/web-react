@@ -22,6 +22,13 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use(
+  cors({
+    origin: "http://localhost:3000", // location of the app we are connecting to
+    credentials: true,
+  })
+);
+
 // ========================================================= END OF MIDDLEWARE =========================================================
 
 // ========================================================= START OF ROUTES =========================================================
@@ -40,10 +47,10 @@ app.post("/api/create-post", (req, res) => {});
 
 // get single post
 app.get("/api/posts/post/:id", (req, res) => {
-  Post.findOne({_id: req.params.id}, (err, post) =>{
+  Post.findOne({ _id: req.params.id }, (err, post) => {
     if (err) res.status(404).send("Sorry, cant find that");
     res.json(post);
-  })
+  });
 });
 
 // update post
