@@ -43,7 +43,17 @@ app.get("/api/posts", (req, res) => {
 });
 
 // create post
-app.post("/api/create-post", (req, res) => {});
+app.post("/api/create-post", (req, res) => {
+  Post.findOne({ title: req.body.title }, async (err, post) => {
+    if (err) res.send(err);
+    const newPost = new Post({
+      title: req.body.title,
+      content: req.body.content
+    });
+    await newPost.save();
+    res.send("Post has been added successfully");
+  });
+ })
 
 // get single post
 app.get("/api/posts/post/:id", (req, res) => {
