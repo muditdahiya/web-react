@@ -82,7 +82,31 @@ app.delete("/api/delete-post/:id", (req, res) => {});
 
 // users
 // create user
-app.post("/api/create-user", (req, res) => {});
+// app.post("/api/create-user", (req, res) => {});
+
+
+app.post("/signup", async (req, res) => {
+  const data = req.body;
+  try {
+    await User.create(data);
+    res.send({ status: "User created" });
+  } catch (error) {
+    res.send({ status: "Error in creating user" });
+  }
+});
+
+app.post("/login",async(req,res)=>{
+  const {email,password} =req.body;
+  const user=await User.findOne({email});
+  if(user =""){
+    res.json({error:"User not Found"});
+  }else if(user!=""){
+    return res.json({status:'./'});
+  }
+  else{
+    return res.json({status:"error",error:"Invalid Password,Please Try again!"});
+  }
+})
 
 // get user
 app.get("/api/user/:id", async (req, res) => {
