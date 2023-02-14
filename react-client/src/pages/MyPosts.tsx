@@ -5,7 +5,7 @@ const MyPosts = () => {
   return (
     <div className="MyPosts">
       <h1>My Posts</h1>
-      <Button >Create Post</Button>
+      <Button>Create Post</Button>
     </div>
   );
 };

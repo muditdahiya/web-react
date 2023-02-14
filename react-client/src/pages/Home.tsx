@@ -25,16 +25,13 @@ const Home = () => {
 
   return (
     <div className="Home">
-<<<<<<< HEAD
       <h1>The return chapter</h1>
-=======
       <h1>the return chapter</h1>
       <div className="content">
         {posts
           ? posts.map((post) => <Post post={post} key={uuidv4()} />)
           : "Loading..."}
       </div>
->>>>>>> db98673c23556277349a7fccd2238c371ea6866b
     </div>
   );
 };
