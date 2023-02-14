@@ -7,7 +7,11 @@ import MyPosts from "./pages/MyPosts";
 import Favourites from "./pages/Favourites";
 import Profile from "./pages/Profile";
 import Login from "./pages/Login";
+<<<<<<< HEAD
 import SignUp from "./pages/Signup";
+=======
+import AddPosts from "./pages/AddPosts";
+>>>>>>> db98673c23556277349a7fccd2238c371ea6866b
 
 function App() {
   return (
@@ -21,6 +25,11 @@ function App() {
         <Route path="/favourites" element={<Favourites />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<About />} />
+<<<<<<< HEAD
+=======
+        <Route path="/Login" element={<Login />} />
+        <Route path="/addposts" element={<AddPosts />} />
+>>>>>>> db98673c23556277349a7fccd2238c371ea6866b
       </Routes>
     </div>
   );

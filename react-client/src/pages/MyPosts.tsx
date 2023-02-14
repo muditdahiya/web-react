@@ -1,3 +1,5 @@
+import DOMPurify from "dompurify";
+
 const MyPosts = () => {
   return (
     <div className="MyPosts">

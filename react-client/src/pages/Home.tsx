@@ -1,7 +1,40 @@
+import axios from "axios";
+import Post from "../components/Post";
+import { useEffect, useState } from "react";
+import { v4 as uuidv4 } from "uuid";
+
 const Home = () => {
+  const [posts, setPosts] = useState([{}]);
+
+  useEffect(() => {
+    async function getPosts() {
+      axios({
+        method: "GET",
+        withCredentials: true,
+        url: "http://localhost:4000/api/posts",
+      }).then((res) => {
+        setPosts(res.data);
+      });
+    }
+
+    getPosts();
+    console.log("====================================");
+    console.log("rendered");
+    console.log("====================================");
+  }, []);
+
   return (
     <div className="Home">
+<<<<<<< HEAD
       <h1>The return chapter</h1>
+=======
+      <h1>the return chapter</h1>
+      <div className="content">
+        {posts
+          ? posts.map((post) => <Post post={post} key={uuidv4()} />)
+          : "Loading..."}
+      </div>
+>>>>>>> db98673c23556277349a7fccd2238c371ea6866b
     </div>
   );
 };
