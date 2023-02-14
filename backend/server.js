@@ -10,6 +10,7 @@ const uuid = require("uuid");
 
 const { connectDB } = require("./config/database");
 const Post = require("./models/post");
+const User = require("./models/user");
 
 // ========================================================= END OF IMPORT =========================================================
 
@@ -48,12 +49,12 @@ app.post("/api/create-post", (req, res) => {
     if (err) res.send(err);
     const newPost = new Post({
       title: req.body.title,
-      content: req.body.content
+      content: req.body.content,
     });
     await newPost.save();
     res.send("Post has been added successfully");
   });
- })
+});
 
 // get single post
 app.get("/api/posts/post/:id", (req, res) => {
@@ -64,23 +65,50 @@ app.get("/api/posts/post/:id", (req, res) => {
 });
 
 // update post
-app.put("/api/update-post/:id", (req, res) => {});
+app.put("/api/update-post/:id", (req, res) => {
+  // update this updateObject according to req.body
+  const updateObject = {};
+  Post.findByIdAndUpdate(req.params.id, updateObject, function (err, docs) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Updated Docs : ", docs);
+    }
+  });
+});
 
 // delete post
-app.post("/api/delete-post/:id", (req, res) => {});
+app.delete("/api/delete-post/:id", (req, res) => {});
 
 // users
 // create user
 app.post("/api/create-user", (req, res) => {});
 
 // get user
-app.get("/api/user/:id", (req, res) => {});
+app.get("/api/user/:id", async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findOne({ _id: id }).exec();
+  if (user) {
+    res.status(200).json(user);
+  } else {
+    res.status(404).json({ message: "No such user exists" });
+  }
+});
 
 // update user
 app.put("/api/update-user/:id", (req, res) => {});
 
 // delete user
-app.post("/api/delete-user/:id", (req, res) => {});
+app.delete("/api/delete-user/:id", async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findOne({ _id: id }).exec();
+  if (user) {
+    await User.deleteOne({ _id: id }).exec();
+    res.status(200).json({ message: "User deleted successfully" });
+  } else {
+    res.status(404).json({ message: "No such user exists" });
+  }
+});
 
 // ========================================================= END OF ROUTES =========================================================
 
