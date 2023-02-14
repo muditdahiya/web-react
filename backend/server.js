@@ -7,9 +7,12 @@ const bcrypt = require("bcryptjs");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const uuid = require("uuid");
+const jwt = require("jsonwebtoken");
+
 
 const { connectDB } = require("./config/database");
 const Post = require("./models/post");
+const User = require("./models/user");
 
 // ========================================================= END OF IMPORT =========================================================
 
@@ -21,7 +24,8 @@ const app = express();
 // ========================================================= START OF MIDDLEWARE =========================================================
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
+app.use(bodyParser.json({ type: "application/vnd.api+json" }));
+app.use(cors());
 // ========================================================= END OF MIDDLEWARE =========================================================
 
 // ========================================================= START OF ROUTES =========================================================
@@ -31,7 +35,31 @@ app.get("/api/posts", (req, res) => {
     res.json(posts);
   });
 });
-// ========================================================= END OF ROUTES =========================================================
+
+app.post("/signup", async (req, res) => {
+  const data = req.body;
+  try {
+    await User.create(data);
+    res.send({ status: "User created" });
+  } catch (error) {
+    res.send({ status: "Error in creating user" });
+  }
+});
+
+app.post("/login",async(req,res)=>{
+  const {email,password} =req.body;
+  const user=await User.findOne({email});
+  if(user =""){
+    res.json({error:"User not Found"});
+  }else if(user!=""){
+    return res.json({status:'./'});
+  }
+  else{
+    return res.json({status:"error",error:"Invalid Password,Please Try again!"});
+  }
+})
+
+// ======================================================== END OF ROUTES =========================================================
 
 if (connectDB()) {
   app.listen(port, () => {

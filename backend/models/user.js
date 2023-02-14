@@ -2,12 +2,15 @@ const mongoose = require("mongoose");
 
 // username is primary key
 const user = new mongoose.Schema({
-  username: String,
-  password: String,
+  // username: String,
+  fname: String,
+  lname: String,
   email: String,
-  firstName: String,
-  lastName: String,
-  country: String,
-});
+  password: String,
+},
+{
+  collection:"users",
+}
+);
 
-module.exports = mongoose.model("User", user);
+module.exports = mongoose.model("users", user);
