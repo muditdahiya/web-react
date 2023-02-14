@@ -10,6 +10,7 @@ const uuid = require("uuid");
 
 const { connectDB } = require("./config/database");
 const Post = require("./models/post");
+const User = require("./models/user");
 
 // ========================================================= END OF IMPORT =========================================================
 
@@ -84,13 +85,30 @@ app.delete("/api/delete-post/:id", (req, res) => {});
 app.post("/api/create-user", (req, res) => {});
 
 // get user
-app.get("/api/user/:id", (req, res) => {});
+app.get("/api/user/:id", async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findOne({ _id: id }).exec();
+  if (user) {
+    res.status(200).json(user);
+  } else {
+    res.status(404).json({ message: "No such user exists" });
+  }
+});
 
 // update user
 app.put("/api/update-user/:id", (req, res) => {});
 
 // delete user
-app.delete("/api/delete-user/:id", (req, res) => {});
+app.delete("/api/delete-user/:id", async (req, res) => {
+  const { id } = req.params;
+  const user = await User.findOne({ _id: id }).exec();
+  if (user) {
+    await User.deleteOne({ _id: id }).exec();
+    res.status(200).json({ message: "User deleted successfully" });
+  } else {
+    res.status(404).json({ message: "No such user exists" });
+  }
+});
 
 // ========================================================= END OF ROUTES =========================================================
 
