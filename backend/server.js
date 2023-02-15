@@ -96,6 +96,8 @@ app.delete("/api/delete-post/:id", async (req, res) => {
   }
 });
 
+console.log("Mudit");
+
 // users
 // create user
 
