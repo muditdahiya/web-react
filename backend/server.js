@@ -66,15 +66,21 @@ app.get("/api/posts/post/:id", (req, res) => {
 
 // update post
 app.put("/api/update-post/:id", (req, res) => {
-  // update this updateObject according to req.body
-  const updateObject = {};
-  Post.findByIdAndUpdate(req.params.id, updateObject, function (err, docs) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Updated Docs : ", docs);
+  const updateObject = req.body;
+  Post.findByIdAndUpdate(
+    req.params.id,
+    updateObject,
+    { new: true },
+    function (err, docs) {
+      if (err) {
+        console.log(err);
+        res.send(err);
+      } else {
+        console.log("Updated Docs : ", docs);
+        res.send(docs);
+      }
     }
-  });
+  );
 });
 
 // delete post
@@ -82,8 +88,6 @@ app.delete("/api/delete-post/:id", (req, res) => {});
 
 // users
 // create user
-// app.post("/api/create-user", (req, res) => {});
-
 
 app.post("/signup", async (req, res) => {
   const data = req.body;
@@ -95,18 +99,20 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-app.post("/login",async(req,res)=>{
-  const {email,password} =req.body;
-  const user=await User.findOne({email});
-  if(user =""){
-    res.json({error:"User not Found"});
-  }else if(user!=""){
-    return res.json({status:'./'});
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  const user = await User.findOne({ email });
+  if ((user = "")) {
+    res.json({ error: "User not Found" });
+  } else if (user != "") {
+    return res.json({ status: "./" });
+  } else {
+    return res.json({
+      status: "error",
+      error: "Invalid Password,Please Try again!",
+    });
   }
-  else{
-    return res.json({status:"error",error:"Invalid Password,Please Try again!"});
-  }
-})
+});
 
 // get user
 app.get("/api/user/:id", async (req, res) => {
@@ -120,7 +126,23 @@ app.get("/api/user/:id", async (req, res) => {
 });
 
 // update user
-app.put("/api/update-user/:id", (req, res) => {});
+app.put("/api/update-user/:id", (req, res) => {
+  const updateObject = req.body;
+  User.findByIdAndUpdate(
+    req.params.id,
+    updateObject,
+    { new: true },
+    function (err, docs) {
+      if (err) {
+        console.log(err);
+        res.send(err);
+      } else {
+        console.log("Updated Docs : ", docs);
+        res.send(docs);
+      }
+    }
+  );
+});
 
 // delete user
 app.delete("/api/delete-user/:id", async (req, res) => {
