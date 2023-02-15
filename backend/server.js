@@ -84,7 +84,16 @@ app.put("/api/update-post/:id", (req, res) => {
 });
 
 // delete post
-app.delete("/api/delete-post/:id", (req, res) => {});
+app.delete("/api/delete-post/:id", async (req, res) => {
+  const { id } = req.params;
+  const user = await Post.findOne({ _id: id }).exec();
+  if (user) {
+    await Post.deleteOne({ _id: id }).exec();
+    res.status(200).json({ message: "Article deleted" });
+  } else {
+    res.status(404).json({ message: "Article doesnt exist" });
+  }
+});
 
 // users
 // create user
