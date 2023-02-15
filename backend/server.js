@@ -156,7 +156,6 @@ app.delete("/api/delete-user/:id", async (req, res) => {
   }
 });
 
-
 app.post("/signup", async (req, res) => {
   const data = req.body;
   try {
@@ -167,18 +166,20 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-app.post("/login",async(req,res)=>{
-  const {email,password} =req.body;
-  const user=await User.findOne({email});
-  if(user =""){
-    res.json({error:"User not Found"});
-  }else if(user!=""){
-    return res.json({status:'./'});
+app.post("/login", async (req, res) => {
+  const { email, password } = req.body;
+  const user = User.findOne({ email });
+  if ((user = "")) {
+    res.json({ error: "User not Found" });
+  } else if (user != "") {
+    return res.json({ status: "./" });
+  } else {
+    return res.json({
+      status: "error",
+      error: "Invalid Password,Please Try again!",
+    });
   }
-  else{
-    return res.json({status:"error",error:"Invalid Password,Please Try again!"});
-  }
-})
+});
 // ========================================================= END OF ROUTES =========================================================
 
 if (connectDB()) {
