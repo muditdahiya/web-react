@@ -92,6 +92,7 @@ app.delete("/api/delete-post/:id", async (req, res) => {
     res.status(200).json({ message: "Article deleted" });
   } else {
     res.status(404).json({ message: "Article doesnt exist" });
+    console.log("Test");
   }
 });
 
