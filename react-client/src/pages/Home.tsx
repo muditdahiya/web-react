@@ -25,8 +25,12 @@ const Home = () => {
 
   return (
     <div className="Home">
-      <h1>The return chapter</h1>
       <h1>the return chapter</h1>
+      <p>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum aut odio
+        aperiam sed dolores similique. Inventore qui iure quisquam aut illo
+        reprehenderit dicta cumque non ut repudiandae, ex, accusamus enim.
+      </p>
       <div className="content">
         {posts
           ? posts.map((post) => <Post post={post} key={uuidv4()} />)
