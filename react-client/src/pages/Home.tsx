@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 const Home = () => {
   const [posts, setPosts] = useState<IPost[] | undefined>(undefined);
   const [searchFilter, setSearchFilter] = useState("");
+
   function getPosts() {
     axios({
       method: "GET",
