@@ -19,3 +19,7 @@ button {
   max-width: 600px;
   padding: 20px;
 }
+
+.Home input {
+  max-width: 600px;
+}

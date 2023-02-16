@@ -1,10 +1,12 @@
 import axios from "axios";
 import Post from "../components/Post";
-import { useEffect, useState } from "react";
+import { IPost } from "../interfaces/Post";
+import { ReactElement, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 const Home = () => {
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<IPost[] | undefined>(undefined);
+  const [searchFilter, setSearchFilter] = useState("");
   function getPosts() {
     axios({
       method: "GET",
@@ -18,14 +20,36 @@ const Home = () => {
     getPosts();
   }, []);
 
+  function createPosts() {
+    let postArray: ReactElement[] = [];
+    if (posts) {
+      for (let post of posts) {
+        console.log(post);
+        if (post.title.toLowerCase().includes(searchFilter.toLowerCase())) {
+          postArray.push(<Post post={post} key={uuidv4()} />);
+        }
+      }
+    }
+
+    postArray = postArray.reverse();
+    console.log(postArray);
+    return postArray;
+  }
+
+  function handleSearchFilter(event: React.FormEvent<HTMLInputElement>) {
+    setSearchFilter(event.currentTarget.value);
+  }
+
   return (
     <div className="Home">
       <h1>the return chapter</h1>
-      <div className="content">
-        {posts
-          ? posts.map((post) => <Post post={post} key={uuidv4()} />)
-          : "Loading..."}
-      </div>
+      <input
+        type="text"
+        value={searchFilter}
+        onChange={handleSearchFilter}
+        placeholder="Search titles"
+      />
+      <div className="content">{createPosts()}</div>
     </div>
   );
 };
