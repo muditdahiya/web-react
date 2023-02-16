@@ -22,7 +22,7 @@ const Signup = () => {
   };
 
   return (
-    <div>
+    <div className="Signup">
       <form onSubmit={onSubmit}>
         <h3>Sign Up</h3>
 

@@ -13,3 +13,9 @@ button {
   padding: 4px;
   font-weight: bold;
 }
+
+.Login,
+.Signup {
+  max-width: 600px;
+  padding: 20px;
+}

@@ -1,5 +1,4 @@
-import DOMPurify from "dompurify";
-import {Button} from "react-bootstrap";
+import { Button } from "react-bootstrap";
 
 const MyPosts = () => {
   return (
