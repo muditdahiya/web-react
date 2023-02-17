@@ -47,9 +47,14 @@ app.get("/api/posts", (req, res) => {
 app.post("/api/create-post", (req, res) => {
   Post.findOne({ title: req.body.title }, async (err, post) => {
     if (err) res.send(err);
+    let tags = req.body.tags.split(" ");
+
     const newPost = new Post({
       title: req.body.title,
       content: req.body.content,
+      date: req.body.date,
+      tags: tags,
+      username: req.body.username,
     });
     await newPost.save();
     res.send("Post has been added successfully");

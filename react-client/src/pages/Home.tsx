@@ -25,15 +25,23 @@ const Home = () => {
     let postArray: ReactElement[] = [];
     if (posts) {
       for (let post of posts) {
-        console.log(post);
         if (post.title.toLowerCase().includes(searchFilter.toLowerCase())) {
-          postArray.push(<Post post={post} key={uuidv4()} />);
+          postArray.push(
+            <Post
+              title={post.title}
+              content={post.content}
+              username={post.username}
+              date={post.date}
+              tags={post.tags}
+              key={uuidv4()}
+            />
+          );
         }
       }
     }
 
     postArray = postArray.reverse();
-    console.log(postArray);
+
     return postArray;
   }
 

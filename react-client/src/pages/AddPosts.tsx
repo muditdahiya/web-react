@@ -2,24 +2,26 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
-
 const AddPosts = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const navigate = useNavigate()
+  const [tags, setTags] = useState("");
+  const navigate = useNavigate();
   const createPost = () => {
     axios({
-        method: "POST",
-        withCredentials: true,
-        data: {
+      method: "POST",
+      withCredentials: true,
+      data: {
         title: title,
         content: content,
+        date: new Date(Date.now()),
+        username: "username", //get from context
+        tags: tags,
       },
-      url: "http://localhost:4000/api/create-post"
+      url: "http://localhost:4000/api/create-post",
     }).then((res) => {
-      console.log(res)
-      navigate("/")
+      console.log(res);
+      navigate("/");
     });
     console.log("====================================");
     console.log(new Date(Date.now()));
@@ -36,11 +38,18 @@ const AddPosts = () => {
             onChange={(e) => setTitle(e.target.value)}
           />
         </div>
-           <input
+        <div className="mb">
+          <input
             type="text"
-            placeholder="Body"
-            onChange={(e) => setContent(e.target.value)}
+            placeholder="Tags"
+            onChange={(e) => setTags(e.target.value)}
           />
+        </div>
+        <input
+          type="text"
+          placeholder="Body"
+          onChange={(e) => setContent(e.target.value)}
+        />
         <button className="btn btn-form mt" onClick={createPost}>
           Post
         </button>

@@ -4,9 +4,5 @@ export interface IPost {
   date: Date;
   username: string;
   postID: string;
-  tags: [
-    {
-      type: string;
-    }
-  ];
+  tags: string[];
 }
