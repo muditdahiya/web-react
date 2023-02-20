@@ -96,7 +96,7 @@ app.delete("/api/delete-post/:id", async (req, res) => {
   }
 });
 
-console.log("Mudit");
+// console.log("Mudit");
 
 // users
 // create user
@@ -114,7 +114,7 @@ app.post("/signup", async (req, res) => {
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
-  if ((user = "")) {
+  if ((user =="")) {
     res.json({ error: "User not Found" });
   } else if (user != "") {
     return res.json({ status: "./" });
