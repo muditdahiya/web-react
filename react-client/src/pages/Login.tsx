@@ -1,26 +1,47 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { useNavigate } from 'react-router-dom'; 
+
 
 type PostType = {
   email: string;
   password: string;
 };
 
+
 const Login = () => {
-  const [loginData, setLoginData] = useState<PostType[]>([]);
+  const [loginData, setLoginData] = useState<PostType>({ email: "", password: "" });
+  const [logindb, setLogindb] = useState<PostType>({ email: "", password: "" });
+  const navigate = useNavigate();
+
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    navigate('/');
     await axios.post("http://localhost:4000/login", loginData).then((res) => {
-      console.log(res.data);
+      if (res.data != null) {
+        console.log(res.data.email);
+        setLogindb(res.data);
+        console.log(logindb);
+        console.log(loginData);
+        if (loginData.email === res.data.email) {
+          console.log("User verified");
+        }
+      } else {
+        console.log("Error: no data returned from server");
+      }
     });
   };
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setLoginData({ ...loginData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setLoginData((prevData) => {
+      return { ...prevData, [name]: value };
+    });
   };
 
   return (
     <form className="Login" onSubmit={onSubmit}>
-      <h3>Sign In</h3>
+      <h3><b>Sign In</b></h3>
 
       <div className="mb-3">
         <label>Email address</label>
@@ -66,6 +87,8 @@ const Login = () => {
         Forgot <a href="/signup">password?</a>
       </p>
     </form>
+    
   );
 };
+
 export default Login;
