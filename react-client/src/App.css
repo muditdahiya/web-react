@@ -58,3 +58,14 @@
 
   font-size: 1.3em;
 }
+
+/* FAVOURITE */
+.btn-fav {
+  cursor: pointer;
+  font-size: 2rem;
+  color: #00000083;
+}
+
+.btn-fav:hover {
+  color: #a3a3a349;
+}
