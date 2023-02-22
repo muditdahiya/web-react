@@ -47,9 +47,14 @@ app.get("/api/posts", (req, res) => {
 app.post("/api/create-post", (req, res) => {
   Post.findOne({ title: req.body.title }, async (err, post) => {
     if (err) res.send(err);
+    let tags = req.body.tags.split(" ");
+
     const newPost = new Post({
       title: req.body.title,
       content: req.body.content,
+      date: req.body.date,
+      tags: tags,
+      username: req.body.username,
     });
     await newPost.save();
     res.send("Post has been added successfully");
@@ -92,10 +97,11 @@ app.delete("/api/delete-post/:id", async (req, res) => {
     res.status(200).json({ message: "Article deleted" });
   } else {
     res.status(404).json({ message: "Article doesnt exist" });
+    console.log("Test");
   }
 });
 
-console.log("Mudit");
+// console.log("Mudit");
 
 // users
 // create user
@@ -112,17 +118,18 @@ app.post("/signup", async (req, res) => {
 
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email });
-  if ((user = "")) {
-    res.json({ error: "User not Found" });
-  } else if (user != "") {
-    return res.json({ status: "./" });
-  } else {
-    return res.json({
-      status: "error",
-      error: "Invalid Password,Please Try again!",
-    });
-  }
+  const user = await User.findOne({ email,password });
+  // console.log(user);
+  // if ((user =="")) {
+  //   res.json({ error: "User not Found" });
+  // } else if (user != "") {
+  return res.json(user);
+  // } else {
+  //   return res.json({
+  //     status: "error",
+  //     error: "Invalid Password,Please Try again!",
+  //   });
+  // }
 });
 
 // get user

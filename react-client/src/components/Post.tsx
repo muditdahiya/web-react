@@ -1,23 +1,27 @@
-import DOMPurify from "dompurify";
-
 interface Props {
-  post: any;
+  title: string;
+  content: string;
+  username: string;
+  date: Date;
+  tags: string[];
 }
 
-const Post = ({ post }: Props) => {
+const Post = (post: Props) => {
+  let date: string = post.date ? post.date.toString() : "";
+
   return (
-    <>
-      <div className="post">
-        <h1 className="post-title">{post.title}</h1>
-        <div className="post-content">
-          <div
-            dangerouslySetInnerHTML={{
-              __html: DOMPurify.sanitize(post.content),
-            }}
-          ></div>
-        </div>
+    <div className="Post">
+      <h1 className="Post-title">{post.title}</h1>
+      <p className="Post-username">
+        by {post.username} at {date}
+      </p>
+      <hr />
+      <p className="Post-tags">{post.tags}</p>
+      <p className="Post-content">{post.content}</p>
+      <div className="buttons">
+        {/* add like comment and favourites button based on authentication */}
       </div>
-    </>
+    </div>
   );
 };
 

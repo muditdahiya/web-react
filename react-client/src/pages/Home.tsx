@@ -1,41 +1,64 @@
 import axios from "axios";
 import Post from "../components/Post";
-import { useEffect, useState } from "react";
+import { IPost } from "../interfaces/Post";
+import { ReactElement, useEffect, useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 
 const Home = () => {
-  const [posts, setPosts] = useState([{}]);
+  const [posts, setPosts] = useState<IPost[] | undefined>(undefined);
+  const [searchFilter, setSearchFilter] = useState("");
 
+  function getPosts() {
+    axios({
+      method: "GET",
+      withCredentials: true,
+      url: "http://localhost:4000/api/posts",
+    }).then((res) => {
+      setPosts(res.data);
+    });
+  }
   useEffect(() => {
-    async function getPosts() {
-      axios({
-        method: "GET",
-        withCredentials: true,
-        url: "http://localhost:4000/api/posts",
-      }).then((res) => {
-        setPosts(res.data);
-      });
+    getPosts();
+  }, []);
+
+  function createPosts() {
+    let postArray: ReactElement[] = [];
+    if (posts) {
+      for (let post of posts) {
+        if (post.title.toLowerCase().includes(searchFilter.toLowerCase())) {
+          postArray.push(
+            <Post
+              title={post.title}
+              content={post.content}
+              username={post.username}
+              date={post.date}
+              tags={post.tags}
+              key={uuidv4()}
+            />
+          );
+        }
+      }
     }
 
-    getPosts();
-    console.log("====================================");
-    console.log("rendered");
-    console.log("====================================");
-  }, []);
+    postArray = postArray.reverse();
+
+    return postArray;
+  }
+
+  function handleSearchFilter(event: React.FormEvent<HTMLInputElement>) {
+    setSearchFilter(event.currentTarget.value);
+  }
 
   return (
     <div className="Home">
       <h1>the return chapter</h1>
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum aut odio
-        aperiam sed dolores similique. Inventore qui iure quisquam aut illo
-        reprehenderit dicta cumque non ut repudiandae, ex, accusamus enim.
-      </p>
-      <div className="content">
-        {posts
-          ? posts.map((post) => <Post post={post} key={uuidv4()} />)
-          : "Loading..."}
-      </div>
+      <input
+        type="text"
+        value={searchFilter}
+        onChange={handleSearchFilter}
+        placeholder="Search titles"
+      />
+      <div className="content">{createPosts()}</div>
     </div>
   );
 };
