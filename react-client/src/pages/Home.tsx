@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 const Home = () => {
   const [posts, setPosts] = useState<IPost[] | undefined>(undefined);
   const [searchFilter, setSearchFilter] = useState("");
+  const [searchUsernameFilter, setSearchUseranmeFilter] = useState("");
 
   function getPosts() {
     axios({
@@ -17,6 +18,7 @@ const Home = () => {
       setPosts(res.data);
     });
   }
+
   useEffect(() => {
     getPosts();
   }, []);
@@ -25,7 +27,12 @@ const Home = () => {
     let postArray: ReactElement[] = [];
     if (posts) {
       for (let post of posts) {
-        if (post.title.toLowerCase().includes(searchFilter.toLowerCase())) {
+        if (
+          post.title.toLowerCase().includes(searchFilter.toLowerCase()) &&
+          post.username
+            .toLowerCase()
+            .includes(searchUsernameFilter.toLowerCase())
+        ) {
           postArray.push(
             <Post
               title={post.title}
@@ -48,6 +55,11 @@ const Home = () => {
   function handleSearchFilter(event: React.FormEvent<HTMLInputElement>) {
     setSearchFilter(event.currentTarget.value);
   }
+  function handleSearchUsernameFilter(
+    event: React.FormEvent<HTMLInputElement>
+  ) {
+    setSearchFilter(event.currentTarget.value);
+  }
 
   return (
     <div className="Home">
@@ -56,7 +68,13 @@ const Home = () => {
         type="text"
         value={searchFilter}
         onChange={handleSearchFilter}
-        placeholder="Search titles"
+        placeholder="Search title"
+      />
+      <input
+        type="text"
+        value={searchUsernameFilter}
+        onChange={handleSearchUsernameFilter}
+        placeholder="Search username"
       />
       <div className="content">{createPosts()}</div>
     </div>

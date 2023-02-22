@@ -32,6 +32,7 @@
 }
 
 .Post {
+  max-width: 50vw;
   width: 100%;
   background-color: #d8c2a266;
   border-radius: 10px;

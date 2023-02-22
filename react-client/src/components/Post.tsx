@@ -8,12 +8,13 @@ interface Props {
 
 const Post = (post: Props) => {
   let date: string = post.date ? post.date.toString() : "";
+  let username: string = post.username ? post.username.toString() : "";
 
   return (
     <div className="Post">
       <h1 className="Post-title">{post.title}</h1>
       <p className="Post-username">
-        by {post.username} at {date}
+        by {username} at {date}
       </p>
       <hr />
       <p className="Post-tags">{post.tags}</p>
