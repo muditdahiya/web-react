@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 const Home = () => {
   const [posts, setPosts] = useState<IPost[] | undefined>(undefined);
   const [searchFilter, setSearchFilter] = useState("");
-  const [searchUsernameFilter, setSearchUseranmeFilter] = useState("");
+  const [searchUsernameFilter, setSearchUsernameFilter] = useState("");
 
   function getPosts() {
     axios({
@@ -58,7 +58,7 @@ const Home = () => {
   function handleSearchUsernameFilter(
     event: React.FormEvent<HTMLInputElement>
   ) {
-    setSearchFilter(event.currentTarget.value);
+    setSearchUsernameFilter(event.currentTarget.value);
   }
 
   return (
