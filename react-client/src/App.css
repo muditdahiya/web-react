@@ -1,17 +1,12 @@
-input {
-  width: 90%;
-  padding: 4px;
+.App {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-evenly;
-  margin: 5px;
+  min-width: 80vw;
 }
 
-button {
-  width: 50%;
-  background-color: rgb(82, 156, 230);
-  padding: 4px;
-  font-weight: bold;
+.Navigation {
+  width: 100vw;
 }
 
 .Login,
@@ -20,6 +15,46 @@ button {
   padding: 20px;
 }
 
+.Home {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.Home h1 {
+  margin-bottom: 30px;
+}
+
 .Home input {
-  max-width: 600px;
+  min-width: 200px;
+  max-width: 50%;
+}
+
+.Post {
+  width: 100%;
+  background-color: #d8c2a266;
+  border-radius: 10px;
+  margin: 20px auto 0;
+  padding: 20px 40px;
+}
+.Post hr {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+.Post h1 {
+  margin-bottom: 5px;
+}
+.Post-username {
+  font-style: italic;
+  margin-bottom: 0;
+}
+.Post-tags {
+  color: gray;
+  margin-bottom: 0;
+}
+.Post-content {
+  margin-top: 10px;
+
+  font-size: 1.3em;
 }
