@@ -7,31 +7,51 @@ type PostType = {
   email: string;
   password: string;
 };
+type UserType = {
+  email: string;
+  token: string;
+};
 
 
 const Login = () => {
   const [loginData, setLoginData] = useState<PostType>({ email: "", password: "" });
-  const [logindb, setLogindb] = useState<PostType>({ email: "", password: "" });
+  // const [logindb, setLogindb] = useState<PostType>({ email: "", password: "" });
   const navigate = useNavigate();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     navigate('/');
-    await axios.post("http://localhost:4000/login", loginData).then((res) => {
+
+    let formValid = true;
+    if (formValid) {
+      let config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+
+      let data = {
+        email: loginData.email,
+        password: loginData.password,
+      };
+
+      
+       await axios.post("http://localhost:4000/login", data,config).then((res) => {
       if (res.data != null) {
-        console.log(res.data.email);
-        setLogindb(res.data);
-        console.log(logindb);
-        console.log(loginData);
-        if (loginData.email === res.data.email) {
+        // console.log(res.data.email);
+        console.log(res.data.token);
+        // setLogindb(res.data);
+        // console.log(logindb);
+        // console.log(loginData);
+        localStorage.setItem("token", res.data.token);
           console.log("User verified");
-        }
-      } else {
+        } else {
         console.log("Error: no data returned from server");
       }
     });
   };
-
+};
+    
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setLoginData((prevData) => {

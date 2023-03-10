@@ -7,7 +7,7 @@ const bcrypt = require("bcryptjs");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const uuid = require("uuid");
-
+const jwt=require('jsonwebtoken');
 const { connectDB } = require("./config/database");
 const Post = require("./models/post");
 const User = require("./models/user");
@@ -106,6 +106,10 @@ app.delete("/api/delete-post/:id", async (req, res) => {
 // users
 // create user
 
+app.get("/signup",(req,res)=>{
+  res.send("Please click on registration form");
+})
+
 app.post("/signup", async (req, res) => {
   const data = req.body;
   try {
@@ -116,20 +120,25 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-app.post("/login", async (req, res) => {
+// app.post("/login", async (req, res) => {
+//   const { email, password } = req.body;
+//   const user = await User.findOne({ email });
+//   return res.json(user);
+ 
+// });
+
+app.post('/login', async (req, res) => {
   const { email, password } = req.body;
-  const user = await User.findOne({ email,password });
-  // console.log(user);
-  // if ((user =="")) {
-  //   res.json({ error: "User not Found" });
-  // } else if (user != "") {
-  return res.json(user);
-  // } else {
-  //   return res.json({
-  //     status: "error",
-  //     error: "Invalid Password,Please Try again!",
-  //   });
-  // }
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    return res.status(401).json({ message: 'Authentication failed' });
+  }
+  if (user.password !== password) {
+    return res.status(401).json({ message: 'Authentication failed' });
+  }
+  const token = jwt.sign({ email: user.email },process.env.JWT_SECRET);
+  return res.json({ token: token });
 });
 
 // get user
