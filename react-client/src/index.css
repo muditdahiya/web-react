@@ -12,11 +12,3 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
-
-.post {
-  width: 60%;
-  background-color: #d8c2a266;
-  border-radius: 10px;
-  margin: 20px auto 0;
-  padding: 20px;
-}
