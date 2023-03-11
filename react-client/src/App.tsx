@@ -9,6 +9,7 @@ import Profile from "./pages/Profile";
 import Login from "./pages/Login";
 import SignUp from "./pages/Signup";
 import AddPosts from "./pages/AddPosts";
+import ContactUs from "./pages/ContactUs";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<About />} />
         <Route path="/addposts" element={<AddPosts />} />
+        <Route path="/contactus" element={<ContactUs />} />
       </Routes>
     </div>
   );

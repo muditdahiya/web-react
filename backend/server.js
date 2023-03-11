@@ -7,10 +7,11 @@ const bcrypt = require("bcryptjs");
 const session = require("express-session");
 const bodyParser = require("body-parser");
 const uuid = require("uuid");
-const jwt=require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 const { connectDB } = require("./config/database");
 const Post = require("./models/post");
 const User = require("./models/user");
+const Contact = require("./models/contact");
 
 // ========================================================= END OF IMPORT =========================================================
 
@@ -106,9 +107,9 @@ app.delete("/api/delete-post/:id", async (req, res) => {
 // users
 // create user
 
-app.get("/signup",(req,res)=>{
+app.get("/signup", (req, res) => {
   res.send("Please click on registration form");
-})
+});
 
 app.post("/signup", async (req, res) => {
   const data = req.body;
@@ -124,20 +125,20 @@ app.post("/signup", async (req, res) => {
 //   const { email, password } = req.body;
 //   const user = await User.findOne({ email });
 //   return res.json(user);
- 
+
 // });
 
-app.post('/login', async (req, res) => {
+app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
 
   if (!user) {
-    return res.status(401).json({ message: 'Authentication failed' });
+    return res.status(401).json({ message: "Authentication failed" });
   }
   if (user.password !== password) {
-    return res.status(401).json({ message: 'Authentication failed' });
+    return res.status(401).json({ message: "Authentication failed" });
   }
-  const token = jwt.sign({ email: user.email },process.env.JWT_SECRET);
+  const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET);
   return res.json({ token: token });
 });
 
@@ -180,6 +181,15 @@ app.delete("/api/delete-user/:id", async (req, res) => {
     res.status(200).json({ message: "User deleted successfully" });
   } else {
     res.status(404).json({ message: "No such user exists" });
+  }
+});
+app.post("/contactus", async (req, res) => {
+  const data = req.body;
+  try {
+    await Contact.create(data);
+    res.send("Query Submitted");
+  } catch (error) {
+    res.send({ status: "Error" });
   }
 });
 
