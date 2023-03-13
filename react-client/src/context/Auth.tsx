@@ -1,22 +1,33 @@
-import { createContext, useState, ReactNode, useEffect } from 'react';
+import {
+  createContext,
+  useState,
+  ReactNode,
+  useEffect,
+  Dispatch,
+  SetStateAction,
+} from "react";
 
 export type AuthContextType = {
   isLoggedIn: boolean;
   login: () => void;
   logout: () => void;
+  username: string;
+  setUsername: Dispatch<SetStateAction<string>>;
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
 
 const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(() => {
-    const savedIsLoggedIn = localStorage.getItem('isLoggedIn');
+    const savedIsLoggedIn = localStorage.getItem("isLoggedIn");
     console.log(savedIsLoggedIn);
-    return savedIsLoggedIn ? savedIsLoggedIn === 'true' : false;
+    return savedIsLoggedIn ? savedIsLoggedIn === "true" : false;
   });
 
+  const [username, setUsername] = useState("");
+
   useEffect(() => {
-    localStorage.setItem('isLoggedIn', isLoggedIn.toString());
+    localStorage.setItem("isLoggedIn", isLoggedIn.toString());
   }, [isLoggedIn]);
 
   const login = () => {
@@ -28,7 +39,9 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, login, logout }}>
+    <AuthContext.Provider
+      value={{ isLoggedIn, login, logout, username, setUsername }}
+    >
       {children}
     </AuthContext.Provider>
   );

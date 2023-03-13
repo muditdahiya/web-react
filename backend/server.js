@@ -141,29 +141,29 @@ app.post("/signup", async (req, res) => {
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
-
   // if (!user) {
   //   return res.status(401).json({ message: "Authentication failed" });
   // }
   // if (user.password !== password) {
   //   return res.status(401).json({ message: "Authentication failed" });
   // }
-  if (user.email === email && user.password === password) {
-    // Create token
-    const token = jwt.sign(
-      { user_id: user._id, email },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "1h",
-      }
-    );
-    console.log(user);
-    await res.send(token);
+  if (user) {
+    if (user.email === email && user.password === password) {
+      // Create token
+      const token = jwt.sign(
+        { user_id: user._id, email },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "1h",
+        }
+      );
+      await res.send(token);
+    } else {
+      res.send(false);
+    }
   } else {
-    res.send(false);
+    console.log("User not found");
   }
-  // const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET);
-  // return res.json({ token: token });
 });
 
 // get user

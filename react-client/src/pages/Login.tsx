@@ -1,7 +1,7 @@
-import React, { useState, useContext} from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import AuthContext, { AuthContextType } from '../context/Auth'
+import AuthContext, { AuthContextType } from "../context/Auth";
 
 type PostType = {
   email: string;
@@ -47,6 +47,7 @@ const Login = () => {
         // if (response.data != false) {
         console.log(response.data);
         localStorage.setItem("token", response.data.token);
+        auth.setUsername(data.email);
         auth.login();
         navigate("/");
         // } else {
