@@ -45,14 +45,14 @@ const Login = () => {
         console.log(response);
 
         if (response.data !== false) {
-          console.log(response.data);
+          // console.log(response.data);
           localStorage.setItem("token", response.data.token);
           const user = {
             username: response.data.email,
             firstName: response.data.fname,
             lastName: response.data.lname,
           };
-          console.log(user);
+          // console.log(user);
           auth.setUser(user);
           auth.login();
           navigate("/");
