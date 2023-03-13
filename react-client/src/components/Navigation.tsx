@@ -60,6 +60,15 @@ const Navigation = () => {
                     ContactUs
                   </NavLink>
                 </li>
+                <li className="nav-item">
+                  <NavLink
+                    className="nav-link"
+                    to="/"
+                    onClick={auth.logout}
+                  >
+                    Logout
+                  </NavLink>
+                </li>
               </>
             ) : (
               <>
