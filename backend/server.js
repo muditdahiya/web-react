@@ -113,11 +113,21 @@ app.get("/signup", (req, res) => {
 
 app.post("/signup", async (req, res) => {
   const data = req.body;
+  const email = req.body.email;
   try {
     await User.create(data);
-    res.send({ status: "User created" });
-  } catch (error) {
-    res.send({ status: "Error in creating user" });
+    // Create token
+    const token = jwt.sign(
+      { user_id: User._id, email },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
+    // save user token
+    await res.send(token);
+  } catch (err) {
+    console.log(err);
   }
 });
 
@@ -132,14 +142,28 @@ app.post("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
 
-  if (!user) {
-    return res.status(401).json({ message: "Authentication failed" });
+  // if (!user) {
+  //   return res.status(401).json({ message: "Authentication failed" });
+  // }
+  // if (user.password !== password) {
+  //   return res.status(401).json({ message: "Authentication failed" });
+  // }
+  if (user.email === email && user.password === password) {
+    // Create token
+    const token = jwt.sign(
+      { user_id: user._id, email },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h",
+      }
+    );
+    console.log(user);
+    await res.send(token);
+  } else {
+    res.send(false);
   }
-  if (user.password !== password) {
-    return res.status(401).json({ message: "Authentication failed" });
-  }
-  const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET);
-  return res.json({ token: token });
+  // const token = jwt.sign({ email: user.email }, process.env.JWT_SECRET);
+  // return res.json({ token: token });
 });
 
 // get user
@@ -183,6 +207,7 @@ app.delete("/api/delete-user/:id", async (req, res) => {
     res.status(404).json({ message: "No such user exists" });
   }
 });
+
 app.post("/contactus", async (req, res) => {
   const data = req.body;
   try {

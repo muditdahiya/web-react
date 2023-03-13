@@ -1,5 +1,7 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import AuthContext, { AuthContextType } from "../context/Auth";
+import { useNavigate } from "react-router-dom";
 
 type PostType = {
   fname: string;
@@ -9,12 +11,29 @@ type PostType = {
 };
 
 const Signup = () => {
+  const auth = useContext(AuthContext) as AuthContextType;
   const [signupData, setSignupData] = useState<PostType[]>([]);
+  const navigate = useNavigate();
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await axios.post("http://localhost:4000/signup", signupData).then((res) => {
-      console.log(res.data);
-    });
+    let config = {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/signup",
+        signupData,
+        config
+      );
+      console.log(response);
+      localStorage.setItem("token", response.data.token);
+      auth.login();
+      navigate("/");
+    } catch (e: any) {
+      console.log("error ", e.message);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +43,9 @@ const Signup = () => {
   return (
     <div className="Signup">
       <form onSubmit={onSubmit}>
-        <h3><b>Sign Up</b></h3>
+        <h3>
+          <b>Sign Up</b>
+        </h3>
 
         <div className="mb-3">
           <label>First name</label>

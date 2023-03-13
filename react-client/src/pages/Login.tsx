@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext} from "react";
 import axios from "axios";
-import { useNavigate } from 'react-router-dom'; 
-
+import { useNavigate } from "react-router-dom";
+import AuthContext, { AuthContextType } from '../context/Auth'
 
 type PostType = {
   email: string;
@@ -12,21 +12,23 @@ type UserType = {
   token: string;
 };
 
-
 const Login = () => {
-  const [loginData, setLoginData] = useState<PostType>({ email: "", password: "" });
-  // const [logindb, setLogindb] = useState<PostType>({ email: "", password: "" });
+  const auth = useContext(AuthContext) as AuthContextType;
+  const [loginData, setLoginData] = useState<PostType>({
+    email: "",
+    password: "",
+  });
   const navigate = useNavigate();
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    navigate('/');
+    // navigate('/');
 
     let formValid = true;
     if (formValid) {
       let config = {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       };
 
@@ -35,23 +37,43 @@ const Login = () => {
         password: loginData.password,
       };
 
-      
-       await axios.post("http://localhost:4000/login", data,config).then((res) => {
-      if (res.data != null) {
-        // console.log(res.data.email);
-        console.log(res.data.token);
-        // setLogindb(res.data);
-        // console.log(logindb);
-        // console.log(loginData);
-        localStorage.setItem("token", res.data.token);
-          console.log("User verified");
-        } else {
-        console.log("Error: no data returned from server");
+      try {
+        const response = await axios.post(
+          "http://localhost:4000/login",
+          data,
+          config
+        );
+
+        // if (response.data != false) {
+        console.log(response.data);
+        localStorage.setItem("token", response.data.token);
+        auth.login();
+        navigate("/");
+        // } else {
+        //   console.log("Invalid Login Details");
+        // }
+      } catch (err: any) {
+        console.log(err);
       }
-    });
+
+      // await axios
+      //   .post("http://localhost:4000/login", data, config)
+      //   .then((res) => {
+      //     if (res.data != null) {
+      //       // console.log(res.data.email);
+      //       console.log(res.data.token);
+      //       // setLogindb(res.data);
+      //       // console.log(logindb);
+      //       // console.log(loginData);
+      //       localStorage.setItem("token", res.data.token);
+      //       console.log("User verified");
+      //     } else {
+      //       console.log("Error: no data returned from server");
+      //     }
+      //   });
+    }
   };
-};
-    
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setLoginData((prevData) => {
@@ -61,7 +83,9 @@ const Login = () => {
 
   return (
     <form className="Login" onSubmit={onSubmit}>
-      <h3><b>Sign In</b></h3>
+      <h3>
+        <b>Sign In</b>
+      </h3>
 
       <div className="mb-3">
         <label>Email address</label>
@@ -104,10 +128,9 @@ const Login = () => {
         </button>
       </div>
       <p className="forgot-password text-right">
-        Forgot <a href="/signup">password?</a>
+        <a href="/signup">New User?</a>
       </p>
     </form>
-    
   );
 };
 

@@ -10,22 +10,25 @@ import Login from "./pages/Login";
 import SignUp from "./pages/Signup";
 import AddPosts from "./pages/AddPosts";
 import ContactUs from "./pages/ContactUs";
+import { AuthContextProvider } from "./context/Auth";
 
 function App() {
   return (
     <div className="App">
-      <Navigation />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path='/Login' element={<Login />} />
-        <Route path='/signup' element={<SignUp />} />
-        <Route path="/myposts" element={<MyPosts />} />
-        <Route path="/favourites" element={<Favourites />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/addposts" element={<AddPosts />} />
-        <Route path="/contactus" element={<ContactUs />} />
-      </Routes>
+      <AuthContextProvider>
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/Login" element={<Login />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/myposts" element={<MyPosts />} />
+          <Route path="/favourites" element={<Favourites />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/addposts" element={<AddPosts />} />
+          <Route path="/contactus" element={<ContactUs />} />
+        </Routes>
+      </AuthContextProvider>
     </div>
   );
 }
