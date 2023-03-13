@@ -22,7 +22,6 @@ const Login = () => {
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // navigate('/');
 
     let formValid = true;
     if (formValid) {
@@ -43,35 +42,18 @@ const Login = () => {
           data,
           config
         );
+        console.log(response);
 
-        // if (response.data != false) {
-        console.log(response.data);
-        localStorage.setItem("token", response.data.token);
-        auth.setUsername(data.email);
-        auth.login();
-        navigate("/");
-        // } else {
-        //   console.log("Invalid Login Details");
-        // }
+        if (response.data !== false) {
+          console.log(response.data);
+          localStorage.setItem("token", response.data.token);
+          auth.setUsername(data.email);
+          auth.login();
+          navigate("/");
+        }
       } catch (err: any) {
         console.log(err);
       }
-
-      // await axios
-      //   .post("http://localhost:4000/login", data, config)
-      //   .then((res) => {
-      //     if (res.data != null) {
-      //       // console.log(res.data.email);
-      //       console.log(res.data.token);
-      //       // setLogindb(res.data);
-      //       // console.log(logindb);
-      //       // console.log(loginData);
-      //       localStorage.setItem("token", res.data.token);
-      //       console.log("User verified");
-      //     } else {
-      //       console.log("Error: no data returned from server");
-      //     }
-      //   });
     }
   };
 
