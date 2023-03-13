@@ -28,10 +28,7 @@ const Signup = () => {
         config
       );
       console.log(response);
-      localStorage.setItem("token", response.data.token);
-      auth.login();
-      auth.setUsername(signupData[0].email);
-      navigate("/");
+      navigate("/login");
     } catch (e: any) {
       console.log("error ", e.message);
     }

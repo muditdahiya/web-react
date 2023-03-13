@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import AuthContext, { AuthContextType } from "../context/Auth";
 
 const Profile = () => {
-  const [firstName, setFirstName] = useState("firstUser");
-  const [lastName, setLastName] = useState("lastUser");
-  const [email, setEmail] = useState("emailUser");
+  const auth = useContext(AuthContext) as AuthContextType;
+
+  const [firstName, setFirstName] = useState(auth.user.firstName);
+  const [lastName, setLastName] = useState(auth.user.lastName);
+  const [email, setEmail] = useState(auth.user.username);
 
   const updateAccount = () => {
     console.log("====================================");

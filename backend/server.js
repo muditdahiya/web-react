@@ -157,7 +157,7 @@ app.post("/login", async (req, res) => {
           expiresIn: "1h",
         }
       );
-      await res.send(token);
+      await res.send(user);
     } else {
       res.send(false);
     }

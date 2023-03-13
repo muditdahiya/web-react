@@ -47,7 +47,13 @@ const Login = () => {
         if (response.data !== false) {
           console.log(response.data);
           localStorage.setItem("token", response.data.token);
-          auth.setUsername(data.email);
+          const user = {
+            username: response.data.email,
+            firstName: response.data.fname,
+            lastName: response.data.lname,
+          };
+          console.log(user);
+          auth.setUser(user);
           auth.login();
           navigate("/");
         }

@@ -11,8 +11,14 @@ export type AuthContextType = {
   isLoggedIn: boolean;
   login: () => void;
   logout: () => void;
+  user: User;
+  setUser: Dispatch<SetStateAction<User>>;
+};
+
+type User = {
   username: string;
-  setUsername: Dispatch<SetStateAction<string>>;
+  firstName: string;
+  lastName: string;
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
@@ -24,7 +30,11 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     return savedIsLoggedIn ? savedIsLoggedIn === "true" : false;
   });
 
-  const [username, setUsername] = useState("");
+  const [user, setUser] = useState<User>({
+    username: "",
+    firstName: "",
+    lastName: "",
+  });
 
   useEffect(() => {
     localStorage.setItem("isLoggedIn", isLoggedIn.toString());
@@ -39,9 +49,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider
-      value={{ isLoggedIn, login, logout, username, setUsername }}
-    >
+    <AuthContext.Provider value={{ isLoggedIn, login, logout, user, setUser }}>
       {children}
     </AuthContext.Provider>
   );
