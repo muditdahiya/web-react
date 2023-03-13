@@ -162,6 +162,7 @@ app.post("/login", async (req, res) => {
       res.send(false);
     }
   } else {
+    res.status(401).json({message:"Authentication failed!"});
     console.log("User not found");
   }
 });
