@@ -46,7 +46,6 @@ const Home = () => {
         }
       }
     }
-
     postArray = postArray.reverse();
 
     return postArray;

@@ -219,6 +219,19 @@ app.post("/contactus", async (req, res) => {
   }
 });
 
+
+
+//API call to load about us content 
+app.get('/api/about', (req, res) => {
+  res.json({
+    title: 'About Us',
+    content:  'Welcome to our book reading blog! We are a group of avid readers who love to share our thoughts and recommendations with the world.',
+    content2: 'Our goal is to create a community of book lovers who can connect and share their own reading experiences. We believe that reading is one of the most powerful ways to expand your knowledge and empathy, and we want to help people discover new books and authors that they will love.',
+    content3: 'We will be posting book reviews, recommendations, and other reading-related content on a regular basis. We also welcome guest posts from fellow readers, so if you have something to say about a book you have read feel free to post a review or for any other questions, please get in touch using our Contact us page!',
+    content4: 'Thanks for visiting our blog, and happy reading!'
+  });
+});
+
 // ========================================================= END OF ROUTES =========================================================
 
 if (connectDB()) {
