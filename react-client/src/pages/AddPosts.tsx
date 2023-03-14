@@ -1,8 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import AuthContext, { AuthContextType } from "../context/Auth";
 
 const AddPosts = () => {
+  const auth = useContext(AuthContext) as AuthContextType;
+  console.log(auth);
+
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [tags, setTags] = useState("");
@@ -15,7 +19,7 @@ const AddPosts = () => {
         title: title,
         content: content,
         date: new Date(Date.now()),
-        username: "username", //get from context
+        username: auth.user.username, //get from context
         tags: tags,
       },
       url: "http://localhost:4000/api/create-post",
