@@ -1,9 +1,9 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from "react"; //imports
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AuthContext, { AuthContextType } from "../context/Auth";
 
-type PostType = {
+type PostType = {               //defining type in typescript with required fields
   email: string;
   password: string;
 };
@@ -12,18 +12,18 @@ type UserType = {
   token: string;
 };
 
-const Login = () => {
+const Login = () => {                           //functional component called login using two hooks
   const auth = useContext(AuthContext) as AuthContextType;
   const [loginData, setLoginData] = useState<PostType>({
     email: "",
     password: "",
   });
-  const navigate = useNavigate();
+  const navigate = useNavigate(); //using navigate hook
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {   //onsubmit function
     e.preventDefault();
 
-    let formValid = true;
+    let formValid = true;         //for jwt giving headers
     if (formValid) {
       let config = {
         headers: {
@@ -31,13 +31,13 @@ const Login = () => {
         },
       };
 
-      let data = {
+      let data = {                     //storing into data variable
         email: loginData.email,
         password: loginData.password,
       };
 
-      try {
-        const response = await axios.post(
+      try { 
+        const response = await axios.post(     //using axios for fetching the data
           "http://localhost:4000/login",
           data,
           config
@@ -46,7 +46,7 @@ const Login = () => {
 
         if (response.data !== false) {
           // console.log(response.data);
-          localStorage.setItem("token", response.data.token);
+          localStorage.setItem("token", response.data.token);    //putting the token into localStorage
           const user = {
             username: response.data.email,
             firstName: response.data.fname,
@@ -54,7 +54,7 @@ const Login = () => {
           };
           // console.log(user);
           auth.setUser(user);
-          auth.login();
+          auth.login();          //when user is authenticated then he can login and navigate to home
           navigate("/");
         }
       } catch (err: any) {
@@ -63,10 +63,10 @@ const Login = () => {
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {   //handleChange function
     const { name, value } = e.target;
     setLoginData((prevData) => {
-      return { ...prevData, [name]: value };
+      return { ...prevData, [name]: value };    //this function is used to update the state of loginData variable when user types input fields
     });
   };
 
