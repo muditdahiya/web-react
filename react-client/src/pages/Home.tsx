@@ -8,7 +8,7 @@ const Home = () => {
   const [posts, setPosts] = useState<IPost[] | undefined>(undefined);
   const [searchFilter, setSearchFilter] = useState("");
   const [searchUsernameFilter, setSearchUsernameFilter] = useState("");
-
+  console.log(process.env);
   function getPosts() {
     axios({
       method: "GET",

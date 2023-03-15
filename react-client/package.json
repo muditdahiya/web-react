@@ -1,5 +1,6 @@
 {
   "name": "react-client",
+  "homepage": "http://muditdahiya.com/web-react",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
