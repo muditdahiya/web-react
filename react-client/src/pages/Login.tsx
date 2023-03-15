@@ -3,7 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import AuthContext, { AuthContextType } from "../context/Auth";
 
-type PostType = {               //defining type in typescript with required fields
+type PostType = {
+  //defining type in typescript with required fields
   email: string;
   password: string;
 };
@@ -12,7 +13,8 @@ type UserType = {
   token: string;
 };
 
-const Login = () => {                           //functional component called login using two hooks
+const Login = () => {
+  //functional component called login using two hooks
   const auth = useContext(AuthContext) as AuthContextType;
   const [loginData, setLoginData] = useState<PostType>({
     email: "",
@@ -20,10 +22,11 @@ const Login = () => {                           //functional component called lo
   });
   const navigate = useNavigate(); //using navigate hook
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {   //onsubmit function
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    //onsubmit function
     e.preventDefault();
 
-    let formValid = true;         //for jwt giving headers
+    let formValid = true; //for jwt giving headers
     if (formValid) {
       let config = {
         headers: {
@@ -31,13 +34,15 @@ const Login = () => {                           //functional component called lo
         },
       };
 
-      let data = {                     //storing into data variable
+      let data = {
+        //storing into data variable
         email: loginData.email,
         password: loginData.password,
       };
 
-      try { 
-        const response = await axios.post(     //using axios for fetching the data
+      try {
+        const response = await axios.post(
+          //using axios for fetching the data
           "http://localhost:4000/login",
           data,
           config
@@ -46,15 +51,16 @@ const Login = () => {                           //functional component called lo
 
         if (response.data !== false) {
           // console.log(response.data);
-          localStorage.setItem("token", response.data.token);    //putting the token into localStorage
+          localStorage.setItem("token", response.data.token); //putting the token into localStorage
           const user = {
+            _id: response.data._id,
             username: response.data.email,
             firstName: response.data.fname,
             lastName: response.data.lname,
           };
           // console.log(user);
           auth.setUser(user);
-          auth.login();          //when user is authenticated then he can login and navigate to home
+          auth.login(); //when user is authenticated then he can login and navigate to home
           navigate("/");
         }
       } catch (err: any) {
@@ -63,10 +69,11 @@ const Login = () => {                           //functional component called lo
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {   //handleChange function
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    //handleChange function
     const { name, value } = e.target;
     setLoginData((prevData) => {
-      return { ...prevData, [name]: value };    //this function is used to update the state of loginData variable when user types input fields
+      return { ...prevData, [name]: value }; //this function is used to update the state of loginData variable when user types input fields
     });
   };
 

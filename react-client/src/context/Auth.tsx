@@ -16,6 +16,7 @@ export type AuthContextType = {
 };
 
 type User = {
+  _id: string;
   username: string;
   firstName: string;
   lastName: string;
@@ -31,6 +32,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   });
 
   const [user, setUser] = useState<User>({
+    _id: "",
     username: "",
     firstName: "",
     lastName: "",

@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Alert } from "reactstrap";
+import { Alert } from "react-bootstrap";
 
 type PostType = {
   name: String;
@@ -122,8 +122,8 @@ const ContactUs = () => {
               </div>
               <Alert
                 color="success"
-                isOpen={isOpen}
-                toggle={() => setIsOpen(!isOpen)}
+                // isOpen={isOpen}
+                // toggle={() => setIsOpen(!isOpen)}
               >
                 {formMessage}
               </Alert>

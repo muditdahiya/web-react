@@ -1,4 +1,6 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 import AuthContext, { AuthContextType } from "../context/Auth";
 
 const Profile = () => {
@@ -7,21 +9,39 @@ const Profile = () => {
   const [firstName, setFirstName] = useState(auth.user.firstName);
   const [lastName, setLastName] = useState(auth.user.lastName);
   const [email, setEmail] = useState(auth.user.username);
+  const [id] = useState(auth.user._id);
+
+  const navigate = useNavigate();
 
   const updateAccount = () => {
-    console.log("====================================");
-    console.log("Account updated");
-    console.log(`Full name >>>> ${firstName} ${lastName}`);
-    console.log(`Email >>> ${email}`);
-
-    console.log("====================================");
+    axios({
+      method: "PUT",
+      withCredentials: true,
+      url: `http://localhost:4000/api/update-user/${id}`,
+      data: {
+        fname: firstName,
+        lname: lastName,
+        email: email,
+      },
+    }).then((res) => {
+      console.log(res);
+      navigate("/profile");
+    });
   };
 
   const deleteAccount = () => {
-    console.log("====================================");
-    console.log("Account deleted");
-    console.log("====================================");
+    axios({
+      method: "DELETE",
+      withCredentials: true,
+      url: `http://localhost:4000/api/delete-user/${id}`,
+    }).then((res) => {
+      console.log(res);
+      auth.logout();
+      navigate("/");
+    });
   };
+
+  useEffect(() => {}, [firstName, lastName, email]);
 
   return (
     <div className="Profile">
