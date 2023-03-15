@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    origin: "http://muditdahiya.com", // location of the app we are connecting to
+    origin: "*", // location of the app we are connecting to
     credentials: true,
   })
 );
