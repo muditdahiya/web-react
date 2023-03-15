@@ -13,7 +13,7 @@ const Home = () => {
     axios({
       method: "GET",
       withCredentials: true,
-      url: "http://localhost:4000/api/posts",
+      url: `${process.env.REACT_APP_BACKEND_URL}/api/posts`,
     }).then((res) => {
       setPosts(res.data);
     });

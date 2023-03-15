@@ -43,7 +43,7 @@ const Login = () => {
       try {
         const response = await axios.post(
           //using axios for fetching the data
-          "http://localhost:4000/login",
+          `${process.env.REACT_APP_BACKEND_URL}/login`,
           data,
           config
         );

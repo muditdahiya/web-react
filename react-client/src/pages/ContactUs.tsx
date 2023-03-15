@@ -16,7 +16,7 @@ const ContactUs = () => {
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     await axios
-      .post("http://localhost:4000/contactus", contactData)
+      .post(`${process.env.REACT_APP_BACKEND_URL}/contactus`, contactData)
       .then((res) => {
         if (res.data !== null) {
           setformMessage("Form submitted successfully!");

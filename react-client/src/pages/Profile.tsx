@@ -17,7 +17,7 @@ const Profile = () => {
     axios({
       method: "PUT",
       withCredentials: true,
-      url: `http://localhost:4000/api/update-user/${id}`,
+      url: `${process.env.REACT_APP_BACKEND_URL}/api/update-user/${id}`,
       data: {
         fname: firstName,
         lname: lastName,
@@ -33,7 +33,7 @@ const Profile = () => {
     axios({
       method: "DELETE",
       withCredentials: true,
-      url: `http://localhost:4000/api/delete-user/${id}`,
+      url: `${process.env.REACT_APP_BACKEND_URL}/api/delete-user/${id}`,
     }).then((res) => {
       console.log(res);
       auth.logout();

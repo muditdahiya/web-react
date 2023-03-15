@@ -22,7 +22,7 @@ const AddPosts = () => {
         username: auth.user.username, //get from context
         tags: tags,
       },
-      url: "http://localhost:4000/api/create-post",
+      url: `${process.env.REACT_APP_BACKEND_URL}/api/create-post`,
     }).then((res) => {
       console.log(res);
       navigate("/");
