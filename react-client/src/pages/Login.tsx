@@ -124,7 +124,7 @@ const Login = () => {
         </button>
       </div>
       <p className="forgot-password text-right">
-        <a href="/web-react/signup">New User?</a>
+        <a href="signup">New User?</a>
       </p>
     </form>
   );
