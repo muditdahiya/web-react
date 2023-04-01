@@ -4,7 +4,7 @@
 
 - Sujitha Bayya
 - Mudit Dahiya
-- Sri Kruthi Nallevelli
+- Sri Kruthi Nallavelli
 - Oghenevwearhe Akemu
 
 ## PROJECT SCOPE 
