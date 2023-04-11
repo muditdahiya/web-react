@@ -12,6 +12,7 @@ const { connectDB } = require("./config/database");
 const Post = require("./models/post");
 const User = require("./models/user");
 const Contact = require("./models/contact");
+const Favourites = require("./models/favourites");
 
 // ========================================================= END OF IMPORT =========================================================
 
@@ -101,6 +102,63 @@ app.delete("/api/delete-post/:id", async (req, res) => {
   } else {
     res.status(404).json({ message: "Article doesnt exist" });
     console.log("Test");
+  }
+});
+
+// add favourite
+app.post("/api/add-fav/:id", function (req, res) {
+  Post.findOne({ _id: req.params.id }, async (err, post) => {
+    if (err) res.send(err);
+    if (post) {
+      const newFav = new Favourites({
+        username: req.body.username,
+        postID: req.params.id,
+      });
+      await newFav.save();
+      const fav = await Favourites.findOne({
+        username: req.body.username,
+        postID: req.params.id,
+      }).exec();
+      if (fav) {
+        res.send(fav);
+      } else {
+        res.send("Failed to add to favorites");
+      }
+    }
+  });
+});
+
+// get all user's favorites
+app.get("/api/favs/:username", async function (req, res) {
+  const favs = await Favourites.find({ username: req.params.username }).exec();
+  if (favs) {
+    let favArray = [];
+    for (let fav of favs) {
+      const temp = await Post.findOne({ _id: fav.postID }).exec();
+      if (temp) {
+        favArray.push(temp);
+      }
+    }
+    res.send(favArray);
+  } else {
+    res.send("Failed to get favorites");
+  }
+});
+
+// delete favourite
+app.delete("/api/delete-fav/:username/:id", async function (req, res) {
+  const { id, username } = req.params;
+
+  const fav = await Favourites.findOne({
+    postID: id,
+    username: username,
+  }).exec();
+
+  if (fav) {
+    await Favourites.deleteOne({ postID: id, username: username }).exec();
+    res.status(200).json({ message: "Favourite deleted successfully" });
+  } else {
+    res.status(404).json({ message: "No such favourite exists" });
   }
 });
 

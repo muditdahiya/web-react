@@ -61,6 +61,12 @@
 }
 
 /* FAVOURITE */
+.btn-favv {
+  cursor: pointer;
+  font-size: 2rem;
+  color: #a3a3a349;
+}
+
 .btn-fav {
   cursor: pointer;
   font-size: 2rem;
