@@ -26,9 +26,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(
   cors({
-    origin: "*",
-    origin: "http://muditdahiya.com",
-    origin: "http://localhost:3000",
+    origin: false,
+    // origin: "*",
+    // origin: "http://muditdahiya.com",
+    // origin: "http://localhost:3000",
     credentials: true,
   })
 );
