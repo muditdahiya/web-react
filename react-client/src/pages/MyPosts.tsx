@@ -33,6 +33,7 @@ const MyPosts = () => {
         if (post.username.toLowerCase() == username.toLowerCase()) {
           postArray.push(
             <Post
+              _id={post._id}
               title={post.title}
               content={post.content}
               username={post.username}
