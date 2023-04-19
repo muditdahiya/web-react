@@ -19,7 +19,6 @@ const About: React.FC = () => {
   function fetchAboutContent() {
     axios({
       method: "GET",
-      withCredentials: true,
       url: `${process.env.REACT_APP_BACKEND_URL}/api/about`,
     }).then((res) => {
       setAboutContent(res.data);

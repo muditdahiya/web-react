@@ -15,7 +15,6 @@ const MyPosts = () => {
   function getPosts() {
     axios({
       method: "GET",
-      withCredentials: true,
       url: `${process.env.REACT_APP_BACKEND_URL}/api/posts`,
     }).then((res) => {
       setPosts(res.data);
@@ -30,18 +29,20 @@ const MyPosts = () => {
     let postArray: ReactElement[] = [];
     if (posts) {
       for (let post of posts) {
-        if (post.username.toLowerCase() == username.toLowerCase()) {
-          postArray.push(
-            <Post
-              _id={post._id}
-              title={post.title}
-              content={post.content}
-              username={post.username}
-              date={post.date}
-              tags={post.tags}
-              key={uuidv4()}
-            />
-          );
+        if (post.username) {
+          if (post.username.toLowerCase() == username.toLowerCase()) {
+            postArray.push(
+              <Post
+                _id={post._id}
+                title={post.title}
+                content={post.content}
+                username={post.username}
+                date={post.date}
+                tags={post.tags}
+                key={uuidv4()}
+              />
+            );
+          }
         }
       }
       postArray = postArray.reverse();

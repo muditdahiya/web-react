@@ -28,7 +28,7 @@ const Favourite = (post: Props) => {
       // delete fav
       axios({
         method: "DELETE",
-        withCredentials: true,
+
         url: `${process.env.REACT_APP_BACKEND_URL}/api/delete-fav/${email}/${post._id}`,
       }).then((response) => {
         console.log(response);
@@ -37,7 +37,7 @@ const Favourite = (post: Props) => {
       // add fav
       axios({
         method: "POST",
-        withCredentials: true,
+
         data: {
           username: email,
           postID: post._id,
@@ -54,7 +54,6 @@ const Favourite = (post: Props) => {
   return (
     <>
       <div className="Favourites">
-        <h1>Favourites</h1>
         <div className="content">
           <div className="Post">
             <h1 className="Post-title">{post.title}</h1>

@@ -28,7 +28,7 @@ const Post = (post: Props) => {
       // delete fav
       axios({
         method: "DELETE",
-        withCredentials: true,
+
         url: `${process.env.REACT_APP_BACKEND_URL}/api/delete-fav/${email}/${post._id}`,
       }).then((response) => {
         console.log(response);
@@ -37,7 +37,7 @@ const Post = (post: Props) => {
       // add fav
       axios({
         method: "POST",
-        withCredentials: true,
+
         data: {
           username: email,
           postID: post._id,

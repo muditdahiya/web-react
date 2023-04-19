@@ -8,11 +8,9 @@ const Home = () => {
   const [posts, setPosts] = useState<IPost[] | undefined>(undefined);
   const [searchFilter, setSearchFilter] = useState("");
   const [searchUsernameFilter, setSearchUsernameFilter] = useState("");
-  console.log(process.env);
   function getPosts() {
     axios({
       method: "GET",
-      withCredentials: true,
       url: `${process.env.REACT_APP_BACKEND_URL}/api/posts`,
     }).then((res) => {
       setPosts(res.data);
@@ -25,25 +23,30 @@ const Home = () => {
 
   function createPosts() {
     let postArray: ReactElement[] = [];
-    if (posts) {
+    if (posts !== undefined) {
       for (let post of posts) {
-        if (
-          post.title.toLowerCase().includes(searchFilter.toLowerCase()) &&
-          post.username
-            .toLowerCase()
-            .includes(searchUsernameFilter.toLowerCase())
-        ) {
-          postArray.push(
-            <Post
-              _id={post._id}
-              title={post.title}
-              content={post.content}
-              username={post.username}
-              date={post.date}
-              tags={post.tags}
-              key={uuidv4()}
-            />
-          );
+        console.log(post);
+        if (post.title) {
+          if (post.username) {
+            if (
+              post.title.toLowerCase().includes(searchFilter.toLowerCase()) &&
+              post.username
+                .toLowerCase()
+                .includes(searchUsernameFilter.toLowerCase())
+            ) {
+              postArray.push(
+                <Post
+                  _id={post._id}
+                  title={post.title}
+                  content={post.content}
+                  username={post.username}
+                  date={post.date}
+                  tags={post.tags}
+                  key={uuidv4()}
+                />
+              );
+            }
+          }
         }
       }
     }

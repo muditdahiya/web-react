@@ -15,7 +15,6 @@ const Favourites = () => {
   function getFavs() {
     axios({
       method: "GET",
-      withCredentials: true,
       url: `${process.env.REACT_APP_BACKEND_URL}/api/favs/${email}`,
     }).then((res) => {
       console.log(res.data);
@@ -50,7 +49,12 @@ const Favourites = () => {
     return favArray;
   }
 
-  return <div className="content">{createFavs()}</div>;
+  return (
+    <div className="content">
+      <h1>Favourites</h1>
+      {createFavs()}
+    </div>
+  );
 };
 
 export default Favourites;
